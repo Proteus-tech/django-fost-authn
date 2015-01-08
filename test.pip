@@ -4,3 +4,5 @@ django-nose
 mock
 nose
 unittest2
+
+-e git+git@git.proteus-tech.com:oer/auth-client.git#egg=auth_client

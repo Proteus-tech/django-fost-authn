@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from fost_authn.signature import fost_hmac_url_signature, \
     fost_hmac_request_signature_with_headers, filter_query_string
 
+from auth_client.models import LocalUser
 
 class FostBackend(object):
     def authenticate(self, **kwargs):
@@ -25,9 +26,9 @@ class FostBackend(object):
         except User.DoesNotExist:
             _forbid("User not found")
 
-    def get_user(self, user_id):
-        if user_id:
-            return User.objects.get(username=user_id)
+    def get_user(self, user_email):
+        if user_email:
+            return LocalUser.objects.get(email=user_email)
 
 
 def _forbid(error):
