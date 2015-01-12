@@ -47,7 +47,7 @@ def _url_signature(backend, request):
     else:
         _e = ''
     key = request.GET['_k']
-    secret = settings.FOST_AUTHN_GET_SECRET(request, key)
+    secret = settings.FOST_AUTHN_GET_SECRET()
     query = filter_query_string(request.META['QUERY_STRING'])
     logging.info("Query string %s changed to %s for signing",
         request.META['QUERY_STRING'], query)
