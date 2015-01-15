@@ -29,7 +29,7 @@ def fost_hmac_url_signature(
         document = '%s%s?%s\n%s' % (host, path, query_string, expires)
     else:
         document = '%s%s\n%s' % (host, path, expires)
-    signature = sha1_hmac(secret, document)
+    signature = sha1_hmac(secret, document.encode('utf-8'))
     return signature
 
 
