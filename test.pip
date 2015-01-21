@@ -1,5 +1,5 @@
 coverage
-django == 1.2.5
+django==1.7
 django-nose
 mock
 nose

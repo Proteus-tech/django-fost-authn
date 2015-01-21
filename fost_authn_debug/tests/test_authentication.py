@@ -1,14 +1,15 @@
 from datetime import datetime
+from django.contrib.auth import get_user_model
 from unittest2 import TestCase
 import mock
 
 from django.conf import settings
-from django.contrib.auth.models import User
 
 from mock_request import MockRequest
 
 from fost_authn import FostBackend, Middleware
 
+User = get_user_model()
 
 class _TestBase(TestCase):
     """

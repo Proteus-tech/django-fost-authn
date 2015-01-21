@@ -5,13 +5,14 @@ from urllib import unquote
 
 from django import VERSION
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core import mail
-from django.contrib.auth.models import User
+
+User = get_user_model()
 
 from fost_authn.signature import fost_hmac_url_signature, \
     fost_hmac_request_signature_with_headers, filter_query_string
 
-from auth_client.models import LocalUser
 
 class FostBackend(object):
     def authenticate(self, **kwargs):
@@ -26,9 +27,12 @@ class FostBackend(object):
         except User.DoesNotExist:
             _forbid("User not found")
 
-    def get_user(self, user_email):
-        if user_email:
-            return LocalUser.objects.get(email=user_email)
+    def get_user(self, key):
+        if key:
+            kwargs = {
+                User.USERNAME_FIELD: key
+            }
+            return User.objects.get(**kwargs)
 
 
 def _forbid(error):
@@ -47,7 +51,7 @@ def _url_signature(backend, request):
     else:
         _e = ''
     key = request.GET['_k']
-    secret = settings.FOST_AUTHN_GET_SECRET()
+    secret = settings.FOST_AUTHN_GET_SECRET(request, key)
     query = filter_query_string(request.META['QUERY_STRING'])
     logging.info("Query string %s changed to %s for signing",
         request.META['QUERY_STRING'], query)

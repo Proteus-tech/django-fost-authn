@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import *
 
 urlpatterns = patterns('',
     (r'^$', 'fost_authn_debug.views.root'),

@@ -1,12 +1,14 @@
 from datetime import datetime
+from django.contrib.auth import get_user_model
 from unittest2 import TestCase
 import mock
 
 from django.conf import settings
 from django.test.client import Client
-from django.contrib.auth.models import User
 
 from fost_authn.signature import fost_hmac_request_signature
+
+User = get_user_model()
 
 
 class TestFakeHTTPClientUnsigned(TestCase):

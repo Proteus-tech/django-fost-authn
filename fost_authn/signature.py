@@ -2,6 +2,7 @@ import hashlib
 import hmac
 import logging
 
+from django.utils.encoding import smart_str
 
 def sha1_hmac(secret, document):
     """
@@ -29,7 +30,7 @@ def fost_hmac_url_signature(
         document = '%s%s?%s\n%s' % (host, path, query_string, expires)
     else:
         document = '%s%s\n%s' % (host, path, expires)
-    signature = sha1_hmac(secret, document.encode('utf-8'))
+    signature = sha1_hmac(secret, smart_str(document))
     return signature
 
 
